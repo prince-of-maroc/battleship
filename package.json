@@ -4,7 +4,7 @@
     "description": "My solution to a game of Battleship using Test-Driven-Development, as assigned by The Odin Project",
     "main": "webpack.common.js",
     "scripts": {
-        "test": "jest",
+        "test": "jest --verbose",
         "start": "webpack-dev-server --config webpack/webpack.dev.js --open",
         "build": "webpack --config webpack/webpack.prod.js"
     },
