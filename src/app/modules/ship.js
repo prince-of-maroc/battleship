@@ -1,4 +1,4 @@
-export default function shipFactoryFunction(length) {
+export default function createShip(length) {
     return {
         length,
         hits: 0,

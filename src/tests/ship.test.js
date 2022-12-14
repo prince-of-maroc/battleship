@@ -1,7 +1,7 @@
-import shipFactoryFunction from "../app/modules/ship.js";
+import createShip from "../app/modules/ship.js";
 
 describe("Ship Object Tests", () => {
-    let ship = shipFactoryFunction(4);
+    let ship = createShip(4);
     test("Object has necessary properties", () => {
         expect(ship.length).toBe(4);
         expect(ship.hits).toBe(0);
