@@ -35,9 +35,27 @@ export default function createGameboard() {
         },
         receiveAttack(coords) {
             const [x, y] = coords;
+
+            const coordsAreRepetitive = () => {
+                for (const coord of this.hitSquares) {
+                    if (coord[0] == x && coord[1] == y) {
+                        return true;
+                    }
+                }
+                for (const coord of this.missedSquares) {
+                    if (coord[0] == x && coord[1] == y) {
+                        return true;
+                    }
+                }
+                return false;
+            };
+            if (coordsAreRepetitive()) {
+                return false;
+            }
             if (this.shipAt([x, y])) {
                 this.spaces[x][y].hit();
                 this.spaces[x][y] = "";
+                this.hitSquares.push(coords);
             } else {
                 this.missedSquares.push(coords);
             }

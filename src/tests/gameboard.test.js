@@ -26,4 +26,13 @@ describe("Gameboard Testing", () => {
         gameboard.receiveAttack([5, 4]);
         expect(gameboard.allSunk()).toBe(true);
     });
+
+    test("Gameboard will refuse repetitive attacks", () => {
+        console.log(gameboard.hitSquares);
+        console.log(gameboard.missedSquares);
+        let a = gameboard.receiveAttack([1, 1]);
+        expect(a).toBe(false);
+        expect(gameboard.receiveAttack([4, 4])).toBe(false);
+        expect(gameboard.receiveAttack([3, 3])).not.toBe(false);
+    });
 });
