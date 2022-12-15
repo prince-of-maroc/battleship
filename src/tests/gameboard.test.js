@@ -19,4 +19,11 @@ describe("Gameboard Testing", () => {
         gameboard.receiveAttack([1, 1]);
         expect(gameboard.missedSquares.includes([1, 1]));
     });
+
+    test("Gameboard can detect if all ships are sunk", () => {
+        gameboard.receiveAttack([3, 4]);
+        gameboard.receiveAttack([4, 4]);
+        gameboard.receiveAttack([5, 4]);
+        expect(gameboard.allSunk()).toBe(true);
+    });
 });

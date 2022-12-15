@@ -2,6 +2,7 @@ export default function createGameboard() {
     return {
         spaces: create10x10Grid(),
         missedSquares: [],
+        hitSquares: [],
         shipAt(coords) {
             const [x, y] = coords;
             if (this.spaces[x][y] != "") return true;
@@ -11,22 +12,22 @@ export default function createGameboard() {
             const [x, y] = coords;
             switch (direction) {
                 case "left":
-                    for (let i = x; i >= x - ship.length; i--) {
+                    for (let i = x; i > x - ship.length; i--) {
                         this.spaces[i][y] = ship;
                     }
                     break;
                 case "right":
-                    for (let i = x; i <= x + ship.length; i++) {
+                    for (let i = x; i < x + ship.length; i++) {
                         this.spaces[i][y] = ship;
                     }
                     break;
                 case "up":
-                    for (let i = y; i <= y + ship.length; i++) {
+                    for (let i = y; i < y + ship.length; i++) {
                         this.spaces[x][i] = ship;
                     }
                     break;
                 case "down":
-                    for (let i = y; i >= y - ship.length; i--) {
+                    for (let i = y; i > y - ship.length; i--) {
                         this.spaces[x][i] = ship;
                     }
                     break;
@@ -36,9 +37,20 @@ export default function createGameboard() {
             const [x, y] = coords;
             if (this.shipAt([x, y])) {
                 this.spaces[x][y].hit();
+                this.spaces[x][y] = "";
             } else {
                 this.missedSquares.push(coords);
             }
+        },
+        allSunk() {
+            for (const row of this.spaces) {
+                for (const space of row) {
+                    if (space != "") {
+                        return false;
+                    }
+                }
+            }
+            return true;
         },
     };
 }
