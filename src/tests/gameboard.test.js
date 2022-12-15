@@ -7,15 +7,15 @@ describe("Gameboard Testing", () => {
 
     test("Gameboard can place ship at specific location", () => {
         gameboard.placeShip(ship, [5, 4], "left");
-        expect(gameboard.shipAt(5, 4)).toBe(true);
+        expect(gameboard.shipAt([5, 4])).toBe(true);
     });
 
-    test.skip("Gameboard can detect if enemy shot hit", () => {
-        gameboard.receiveAttack([0, 3]);
+    test("Gameboard can detect if enemy shot hit", () => {
+        gameboard.receiveAttack([2, 4]);
         expect(ship.hits).toBe(1);
     });
 
-    test.skip("Gameboard can detect if enemy shot missed", () => {
+    test("Gameboard can detect if enemy shot missed", () => {
         gameboard.receiveAttack([1, 1]);
         expect(gameboard.missedSquares.includes([1, 1]));
     });

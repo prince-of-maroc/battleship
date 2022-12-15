@@ -1,7 +1,9 @@
 export default function createGameboard() {
     return {
         spaces: create10x10Grid(),
-        shipAt(x, y) {
+        missedSquares: [],
+        shipAt(coords) {
+            const [x, y] = coords;
             if (this.spaces[x][y] != "") return true;
             return false;
         },
@@ -30,7 +32,14 @@ export default function createGameboard() {
                     break;
             }
         },
-        receiveAttack() {},
+        receiveAttack(coords) {
+            const [x, y] = coords;
+            if (this.shipAt([x, y])) {
+                this.spaces[x][y].hit();
+            } else {
+                this.missedSquares.push(coords);
+            }
+        },
     };
 }
 
