@@ -7,7 +7,7 @@ describe("Gameboard Testing", () => {
 
     test("Gameboard can place ship at specific location", () => {
         gameboard.placeShip(ship, [5, 4], "left");
-        expect(gameboard.shipAt([5, 4])).toBe(true);
+        expect(gameboard.hasShip([5, 4])).toBe(true);
     });
 
     test("Gameboard can detect if enemy shot hit", () => {

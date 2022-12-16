@@ -3,7 +3,7 @@ export default function createGameboard() {
         spaces: create10x10Grid(),
         missedSquares: [],
         hitSquares: [],
-        shipAt(coords) {
+        hasShip(coords) {
             const [x, y] = coords;
             return this.spaces[x][y] ? true : false;
         },
@@ -51,7 +51,7 @@ export default function createGameboard() {
             if (coordsAreRepetitive()) {
                 return false;
             }
-            if (this.shipAt([x, y])) {
+            if (this.hasShip([x, y])) {
                 this.spaces[x][y].hit();
                 this.spaces[x][y] = null;
                 this.hitSquares.push(coords);

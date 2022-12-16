@@ -3,7 +3,7 @@ describe("Player Object Testing", () => {
     let playerTwo = null;
     test("Players can attack enemy gameboard", () => {
         playerOne.attack(playerTwo, [4, 4]);
-        expect(playerTwo.shipAt([4, 4]).hits).toBe(1);
+        expect(playerTwo.hasShip([4, 4]).hits).toBe(1);
     });
 
     test("Computer players can make legal moves", () => {
