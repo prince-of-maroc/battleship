@@ -5,8 +5,7 @@ export default function createGameboard() {
         hitSquares: [],
         shipAt(coords) {
             const [x, y] = coords;
-            if (this.spaces[x][y] != "") return true;
-            return false;
+            return this.spaces[x][y] ? true : false;
         },
         placeShip(ship, coords, direction) {
             const [x, y] = coords;
@@ -54,7 +53,7 @@ export default function createGameboard() {
             }
             if (this.shipAt([x, y])) {
                 this.spaces[x][y].hit();
-                this.spaces[x][y] = "";
+                this.spaces[x][y] = null;
                 this.hitSquares.push(coords);
             } else {
                 this.missedSquares.push(coords);
@@ -63,9 +62,7 @@ export default function createGameboard() {
         allSunk() {
             for (const row of this.spaces) {
                 for (const space of row) {
-                    if (space != "") {
-                        return false;
-                    }
+                    if (space != null) return false;
                 }
             }
             return true;
@@ -78,7 +75,7 @@ function create10x10Grid() {
     for (let i = 0; i < 10; i++) {
         let space = [];
         for (let j = 0; j < 10; j++) {
-            space.push("");
+            space.push(null);
         }
         spaces.push(space);
     }

@@ -28,8 +28,6 @@ describe("Gameboard Testing", () => {
     });
 
     test("Gameboard will refuse repetitive attacks", () => {
-        console.log(gameboard.hitSquares);
-        console.log(gameboard.missedSquares);
         let a = gameboard.receiveAttack([1, 1]);
         expect(a).toBe(false);
         expect(gameboard.receiveAttack([4, 4])).toBe(false);
