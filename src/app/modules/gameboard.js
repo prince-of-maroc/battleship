@@ -38,8 +38,9 @@ export default function createGameboard() {
             if (
                 contains(this.hitSquares, coords) ||
                 contains(this.missedSquares, coords)
-            )
+            ) {
                 return false;
+            }
 
             const [x, y] = coords;
 
