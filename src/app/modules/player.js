@@ -1,5 +1,6 @@
 import createGameboard from "./gameboard.js";
 import createShip from "./ship.js";
+import contains from "../utils/contains.js";
 
 export default function createPlayer() {
     return {
@@ -21,8 +22,8 @@ export default function createPlayer() {
         randomAttack(player) {
             let coords = generateRandomCoordinates();
             while (
-                player.gameboard.hitSquares.includes(coords) ||
-                player.gameboard.missedSquares.includes(coords)
+                contains(player.gameboard.hitSquares, coords) ||
+                contains(player.gameboard.missedSquares, coords)
             ) {
                 coords = generateRandomCoordinates();
             }
