@@ -10,8 +10,11 @@ describe("Player Object Testing", () => {
         expect(playerTwo.shipAt([5, 4]).hits).toBe(1);
     });
 
-    test.skip("Computer players can make legal moves", () => {
+    test("Computer players can make legal moves", () => {
         playerTwo.randomAttack(playerOne);
-        expect(playerOne.gameboard.hitSquares.length).toBe(1);
+        expect(
+            playerOne.gameboard.hitSquares.length == 1 ||
+                playerOne.gameboard.missedSquares.length == 1
+        ).toBe(true);
     });
 });

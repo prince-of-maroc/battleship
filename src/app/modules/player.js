@@ -19,7 +19,18 @@ export default function createPlayer() {
             player.gameboard.receiveAttack(coords);
         },
         randomAttack(player) {
-            //
+            let coords = generateRandomCoordinates();
+            while (
+                player.gameboard.hitSquares.includes(coords) ||
+                player.gameboard.missedSquares.includes(coords)
+            ) {
+                coords = generateRandomCoordinates();
+            }
+            player.gameboard.receiveAttack(coords);
         },
     };
+}
+
+function generateRandomCoordinates() {
+    return [Math.floor(Math.random() * 10), Math.floor(Math.random() * 10)];
 }
