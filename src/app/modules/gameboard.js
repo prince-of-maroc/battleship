@@ -1,3 +1,5 @@
+import contains from "../utils/contains.js";
+
 export default function createGameboard() {
     return {
         spaces: create10x10Grid(),
@@ -68,11 +70,4 @@ function create10x10Grid() {
         spaces.push(space);
     }
     return spaces;
-}
-
-function contains(arr, value) {
-    // Same as default includes method, but works for arrays of arrays/objects.
-    return JSON.stringify(arr).indexOf(JSON.stringify(value)) != -1
-        ? true
-        : false;
 }
