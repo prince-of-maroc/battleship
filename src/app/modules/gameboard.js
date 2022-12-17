@@ -33,24 +33,14 @@ export default function createGameboard() {
             }
         },
         receiveAttack(coords) {
+            if (
+                contains(this.hitSquares, coords) ||
+                contains(this.missedSquares, coords)
+            )
+                return false;
+
             const [x, y] = coords;
 
-            const coordsAreRepetitive = () => {
-                for (const coord of this.hitSquares) {
-                    if (coord[0] == x && coord[1] == y) {
-                        return true;
-                    }
-                }
-                for (const coord of this.missedSquares) {
-                    if (coord[0] == x && coord[1] == y) {
-                        return true;
-                    }
-                }
-                return false;
-            };
-            if (coordsAreRepetitive()) {
-                return false;
-            }
             if (this.hasShip([x, y])) {
                 this.spaces[x][y].hit();
                 this.spaces[x][y] = null;
@@ -78,4 +68,11 @@ function create10x10Grid() {
         spaces.push(space);
     }
     return spaces;
+}
+
+function contains(arr, value) {
+    // Same as default includes method, but works for arrays of arrays/objects.
+    return JSON.stringify(arr).indexOf(JSON.stringify(value)) != -1
+        ? true
+        : false;
 }
