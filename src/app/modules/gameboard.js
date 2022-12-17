@@ -11,22 +11,22 @@ export default function createGameboard() {
             const [x, y] = coords;
             switch (direction) {
                 case "left":
-                    for (let i = x; i >= x - ship.length; i--) {
+                    for (let i = x; i > x - ship.length; i--) {
                         this.spaces[i][y] = ship;
                     }
                     break;
                 case "right":
-                    for (let i = x; i <= x + ship.length; i++) {
+                    for (let i = x; i < x + ship.length; i++) {
                         this.spaces[i][y] = ship;
                     }
                     break;
                 case "up":
-                    for (let i = y; i <= y + ship.length; i++) {
+                    for (let i = y; i < y + ship.length; i++) {
                         this.spaces[x][i] = ship;
                     }
                     break;
                 case "down":
-                    for (let i = y; i >= y - ship.length; i--) {
+                    for (let i = y; i > y - ship.length; i--) {
                         this.spaces[x][i] = ship;
                     }
                     break;
