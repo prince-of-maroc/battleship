@@ -1,3 +1,8 @@
 node_modules
 dist
 .vscode
+.prettierrc
+.prettierignore
+.babelrc
+.eslintrc.json
+package-lock.json
