@@ -60,14 +60,10 @@ export default function createGameboard() {
             }
         },
         allSunk() {
-            for (const row of this.spaces) {
-                for (const space of row) {
-                    if (space != null) {
-                        return false;
-                    }
-                }
+            if (this.spaces.every((val) => val != null)) {
+                return true;
             }
-            return true;
+            return false;
         },
     };
 }
