@@ -6,3 +6,4 @@ dist
 .babelrc
 .eslintrc.json
 package-lock.json
+.eslintignore
