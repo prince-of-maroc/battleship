@@ -16,5 +16,5 @@ function randomlyPopulateGameboard(player) {
     player.gameboard.placeShip(player.ships.destroyer, [9, 9], "left");
     player.gameboard.placeShip(player.ships.carrier, [3, 3], "up");
     player.gameboard.placeShip(player.ships.cruiser, [7, 7], "down");
-    player.gameboard.placeShip(player.ships.submarine, [0, 9], "left");
+    player.gameboard.placeShip(player.ships.submarine, [0, 9], "right");
 }
