@@ -2,13 +2,15 @@
 @import url("https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap");
 
 * {
+    padding: 0;
+    margin: 0;
     font-family: "Black Ops One";
 }
 
 body {
     display: flex;
     flex-direction: column;
-    background-color: rgb(41, 150, 186);
+    background-color: rgb(37, 114, 203);
 }
 
 // All stylesheets are imported to this file, which is then imported to the webpack entry index.js.
