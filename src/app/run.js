@@ -1,4 +1,5 @@
 import createPlayer from "./modules/player.js";
+import domObject from "./modules/dom.js";
 
 export default function run() {
     // Run Battleship Gameloop
@@ -8,6 +9,9 @@ export default function run() {
 
     randomlyPopulateGameboard(playerOne);
     randomlyPopulateGameboard(playerTwo);
+
+    let dom = domObject();
+    dom.renderGameboards();
 }
 
 function randomlyPopulateGameboard(player) {
