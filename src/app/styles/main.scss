@@ -28,3 +28,26 @@ main {
         }
     }
 }
+
+.board {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    .row {
+        width: inherit;
+        height: 35.5px;
+        display: flex;
+        flex-direction: row;
+        gap: 0;
+        outline: solid 1px black;
+        .space {
+            outline: solid 1px grey;
+            height: inherit;
+            width: 10%;
+            cursor: pointer;
+            &:hover {
+                background-color: lightgray;
+            }
+        }
+    }
+}
