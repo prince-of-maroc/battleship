@@ -1,4 +1,4 @@
-export default function domObject() {
+export default function domManager() {
     return {
         renderGameboards() {
             document.querySelectorAll(".board").forEach((board) => {
@@ -15,6 +15,18 @@ export default function domObject() {
                     board.appendChild(row);
                 }
             });
+        },
+        populateGameboard(player) {
+            for (let x = 0; x < 10; x++) {
+                for (let y = 0; y < 10; y++) {
+                    if (player.gameboard.spaces[x][y]) {
+                        let space = document.querySelector(
+                            `.board #y${y} #x${x}`
+                        );
+                        space.classList.add("hasShip");
+                    }
+                }
+            }
         },
     };
 }
