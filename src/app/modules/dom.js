@@ -1,3 +1,5 @@
+import contains from "../utils/contains.js";
+
 export default function domManager() {
     return {
         renderGameboards() {
@@ -16,17 +18,51 @@ export default function domManager() {
                 }
             });
         },
-        populateGameboard(player) {
+        populateGameboard(player, isPlayer = true) {
             for (let x = 0; x < 10; x++) {
                 for (let y = 0; y < 10; y++) {
                     if (player.gameboard.spaces[x][y]) {
-                        let space = document.querySelector(
-                            `.board #y${y} #x${x}`
-                        );
-                        space.classList.add("hasShip");
+                        if (isPlayer) {
+                            let space = document.querySelector(
+                                `.board #y${y} #x${x}`
+                            );
+                            space.classList.add("hasShip");
+                        } else {
+                            let space = document
+                                .querySelector("main")
+                                .lastElementChild.lastElementChild.querySelector(
+                                    `#y${y} #x${x}`
+                                );
+                            space.classList.add("hasShip");
+                        }
                     }
                 }
             }
+        },
+        addClickabilityToEnemyGameboard(enemyPlayer) {
+            document
+                .querySelector("main")
+                .lastElementChild.lastElementChild.querySelectorAll(".space")
+                .forEach((space) => {
+                    space.addEventListener("click", () => {
+                        //Get x and y coordinates of element
+                        const x = parseInt(space.id.replace(/\D/g, ""));
+                        const y = parseInt(
+                            space.parentElement.id.replace(/\D/g, "")
+                        );
+
+                        //Attack enemy
+                        enemyPlayer.gameboard.receiveAttack([x, y]);
+                        if (
+                            contains(enemyPlayer.gameboard.hitSquares, [x, y])
+                        ) {
+                            space.classList.remove("hasShip");
+                            space.classList.add("hit");
+                        } else {
+                            space.classList.add("missed");
+                        }
+                    });
+                });
         },
     };
 }
