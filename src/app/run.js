@@ -5,14 +5,16 @@ export default function run() {
     // Run Battleship Gameloop
     let dom = domManager();
 
-    let playerOne = createPlayer();
-    let playerTwo = createPlayer();
+    let player = createPlayer();
+    let computer = createPlayer();
 
-    randomlyPopulateGameboard(playerOne);
-    randomlyPopulateGameboard(playerTwo);
+    randomlyPopulateGameboard(player);
+    randomlyPopulateGameboard(computer);
 
     dom.renderGameboards();
-    dom.populateGameboard(playerOne);
+    dom.populateGameboard(player);
+
+    dom.addClickabilityToGameboard(computer);
 }
 
 function randomlyPopulateGameboard(player) {

@@ -39,7 +39,7 @@ export default function domManager() {
                 }
             }
         },
-        addClickabilityToEnemyGameboard(enemyPlayer) {
+        addClickabilityToGameboard(enemyPlayer) {
             document
                 .querySelector("main")
                 .lastElementChild.lastElementChild.querySelectorAll(".space")
