@@ -39,30 +39,59 @@ export default function domManager() {
                 }
             }
         },
-        addClickabilityToGameboard(enemyPlayer) {
-            document
-                .querySelector("main")
-                .lastElementChild.lastElementChild.querySelectorAll(".space")
-                .forEach((space) => {
-                    space.addEventListener("click", () => {
-                        //Get x and y coordinates of element
-                        const x = parseInt(space.id.replace(/\D/g, ""));
-                        const y = parseInt(
-                            space.parentElement.id.replace(/\D/g, "")
-                        );
+        startDOMEventLoop(user, enemyPlayer) {
+            const enemyGameboard =
+                document.querySelector("main").lastElementChild
+                    .lastElementChild;
 
-                        //Attack enemy
-                        enemyPlayer.gameboard.receiveAttack([x, y]);
-                        if (
-                            contains(enemyPlayer.gameboard.hitSquares, [x, y])
-                        ) {
-                            space.classList.remove("hasShip");
-                            space.classList.add("hit");
-                        } else {
-                            space.classList.add("missed");
-                        }
-                    });
+            enemyGameboard.querySelectorAll(".space").forEach((space) => {
+                space.addEventListener("click", () => {
+                    //Get x and y coordinates of element
+                    const x = parseInt(space.id.replace(/\D/g, ""));
+                    const y = parseInt(
+                        space.parentElement.id.replace(/\D/g, "")
+                    );
+
+                    //Attack enemy
+                    user.attack(enemyPlayer, [x, y]);
+
+                    //Update enemy gameboard
+                    if (contains(enemyPlayer.gameboard.hitSquares, [x, y])) {
+                        space.classList.remove("hasShip");
+                        space.classList.add("hit");
+                    } else {
+                        space.classList.add("missed");
+                    }
+
+                    // Either end game or receive attack from enemy
+                    if (enemyPlayer.gameboard.allSunk()) {
+                        alert("You win");
+                    } else {
+                        enemyPlayer.randomAttack(user);
+                        this.updateUserDOM(user);
+                    }
                 });
+            });
+        },
+        updateUserDOM(user) {
+            user.gameboard.missedSquares.forEach((coords) => {
+                const [x, y] = coords;
+                let space = document.querySelector(`.board #y${y} #x${x}`);
+
+                space.classList.add("missed");
+            });
+
+            user.gameboard.hitSquares.forEach((coords) => {
+                const [x, y] = coords;
+                let space = document.querySelector(`.board #y${y} #x${x}`);
+
+                space.classList.remove("hasShip");
+                space.classList.add("hit");
+            });
+
+            if (user.gameboard.allSunk()) {
+                alert("You lose");
+            }
         },
     };
 }

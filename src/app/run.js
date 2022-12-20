@@ -14,7 +14,7 @@ export default function run() {
     dom.renderGameboards();
     dom.populateGameboard(player);
 
-    dom.addClickabilityToGameboard(computer);
+    dom.startDOMEventLoop(player, computer);
 }
 
 function randomlyPopulateGameboard(player) {

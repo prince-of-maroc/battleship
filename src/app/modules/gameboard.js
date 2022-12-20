@@ -53,10 +53,12 @@ export default function createGameboard() {
             }
         },
         allSunk() {
-            if (this.spaces.every((val) => val != null)) {
-                return true;
+            for (const row of this.spaces) {
+                for (const space of row) {
+                    if (space) return false;
+                }
             }
-            return false;
+            return true;
         },
     };
 }
