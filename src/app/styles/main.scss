@@ -55,6 +55,9 @@ main {
 }
 .hit {
     background-color: rgb(255, 0, 0);
+    &:hover {
+        background-color: rgb(255, 0, 0) !important;
+    }
 }
 .missed {
     background-color: rgb(148, 143, 143);
