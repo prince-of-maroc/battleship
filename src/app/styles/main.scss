@@ -7,54 +7,47 @@ main {
     align-items: center;
     flex: 1;
     margin-top: -75px;
-    div {
-        width: 40%;
-        height: 400px;
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-        gap: 5px;
-
-        h2 {
-            text-align: center;
-            color: white;
-            text-shadow: 0 0 5px black;
-            font-size: 2em;
-        }
+    h2 {
+        text-align: center;
+        color: white;
+        text-shadow: 0 0 5px black;
+        font-size: 2em;
     }
 }
 
 .board {
+    height: min(43vw, 500px);
+    width: min(43vw, 500px);
     background-color: white;
-    width: 100%;
-    height: 100%;
     display: flex;
     flex-direction: column;
-    gap: 0;
     .row {
-        width: inherit;
-        height: 35.5px;
+        outline: solid black 1px;
+        height: 10%;
         display: flex;
         flex-direction: row;
-        gap: 0;
-        outline: solid 1px black;
         .space {
-            outline: solid 1px grey;
-            height: inherit;
+            outline: solid black 1px;
             width: 10%;
-            cursor: pointer;
-            &:hover {
-                background-color: lightgray;
-            }
         }
+    }
+}
+
+.enemy {
+    .space:hover {
+        cursor: pointer;
+        background-color: lightgray;
     }
 }
 
 .hasShip {
     background-color: darkslateblue;
+    outline: none !important;
+    z-index: 1;
 }
 .hit {
     background-color: rgb(255, 0, 0);
+    pointer-events: none;
     &:hover {
         background-color: rgb(255, 0, 0) !important;
     }
