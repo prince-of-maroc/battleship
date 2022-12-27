@@ -33,11 +33,46 @@ main {
     }
 }
 
+.player h2 {
+    display: none;
+}
+
+.ships {
+    height: min(60vw, 500px);
+    width: min(45vw, 500px);
+    background: linear-gradient(to bottom, rgb(37, 114, 203) 85%, white 15%);
+    border: solid white 10px;
+    border-radius: 5em;
+    box-shadow: 0 0 10px black;
+
+    display: flex;
+    flex-direction: column;
+
+    h2 {
+        font-size: max(2em, 3vw);
+        padding: 20px;
+    }
+
+    .ship {
+        flex: 1;
+    }
+
+    .btn {
+        text-align: center;
+        padding: 10px;
+        font-size: max(2em, 3vw);
+        user-select: none;
+        cursor: pointer;
+    }
+}
+
 .enemy {
+    display: none;
     .space:hover {
         cursor: pointer;
         background-color: lightgray;
     }
+    display: hidden;
 }
 
 .hasShip {
