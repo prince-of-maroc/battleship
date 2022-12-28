@@ -94,6 +94,7 @@ export default function domManager() {
             }
         },
         startShipPlacementLoop(player) {
+            addRotateFunctionality();
             renderShipSpaces(player.ships.carrier.length);
         },
     };
@@ -113,5 +114,12 @@ function renderShipSpaces(length) {
     shipSpaces.forEach((space) => {
         space.style.width = `${gridSpace.offsetWidth}px`;
         space.style.height = `${gridSpace.offsetHeight}px`;
+    });
+}
+
+function addRotateFunctionality() {
+    const rotateBtn = document.querySelector(".btn");
+    rotateBtn.addEventListener("click", () => {
+        document.querySelector(".ship").classList.toggle("rotate");
     });
 }
