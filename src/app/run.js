@@ -12,6 +12,7 @@ export default function run() {
 
     dom.renderGameboards();
     dom.populateGameboard(player);
+    dom.renderShipSpaces();
 
     dom.startDOMEventLoop(player, computer);
 }

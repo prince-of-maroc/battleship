@@ -93,5 +93,14 @@ export default function domManager() {
                 alert("You lose");
             }
         },
+        renderShipSpaces() {
+            const shipSpaces = document.querySelectorAll(".ship div");
+            const gridSpace = document.querySelector(".space");
+
+            shipSpaces.forEach((space) => {
+                space.style.width = `${gridSpace.offsetWidth}px`;
+                space.style.height = `${gridSpace.offsetHeight}px`;
+            });
+        },
     };
 }
