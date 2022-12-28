@@ -94,32 +94,96 @@ export default function domManager() {
             }
         },
         startShipPlacementLoop(player) {
+            let isVertical = true;
+            let activeSpace;
+            const renderShipSpaces = (length) => {
+                const ship = document.querySelector(".ship");
+                ship.textContent = "";
+                for (let i = 1; i <= length; i++) {
+                    let space = document.createElement("div");
+                    space.classList.add("space");
+                    space.setAttribute("id", `s${i}`);
+                    ship.appendChild(space);
+                    space.addEventListener("mousedown", () => {
+                        activeSpace = space;
+                    });
+                }
+                const shipSpaces = document.querySelectorAll(".ship div");
+                const gridSpace = document.querySelector(".space");
+
+                shipSpaces.forEach((space) => {
+                    space.style.width = `${gridSpace.offsetWidth}px`;
+                    space.style.height = `${gridSpace.offsetHeight}px`;
+                });
+            };
+            const changeShipName = (name) => {
+                document.querySelector("span").textContent = name;
+            };
+            const addRotateFunctionality = () => {
+                const rotateBtn = document.querySelector(".btn");
+                rotateBtn.addEventListener("click", () => {
+                    document.querySelector(".ship").classList.toggle("rotate");
+                    isVertical = !isVertical;
+                });
+            };
+
+            const spaces = document.querySelectorAll(".space");
+
+            spaces.forEach((space) => {
+                space.addEventListener("dragover", (e) => {
+                    e.preventDefault();
+                });
+                space.addEventListener("dragenter", (e) => {
+                    e.preventDefault();
+                });
+                space.addEventListener("drop", (e) => {
+                    dropShip(activeSpace, e.toElement, isVertical);
+                });
+            });
+
             addRotateFunctionality();
+
+            changeShipName("carrier");
             renderShipSpaces(player.ships.carrier.length);
         },
     };
 }
 
-function renderShipSpaces(length) {
-    const ship = document.querySelector(".ship");
-    ship.textContent = "";
-    for (let i = 0; i < length; i++) {
-        let space = document.createElement("div");
-        space.classList.add("space");
-        ship.appendChild(space);
-    }
-    const shipSpaces = document.querySelectorAll(".ship div");
-    const gridSpace = document.querySelector(".space");
+function dropShip(source, destination, isVertical) {
+    let shipLength = source.parentElement.children.length;
+    let dragPosition = getIDNumber(source);
+    let xPosition = getIDNumber(destination);
+    let rearDiff = shipLength - dragPosition;
 
-    shipSpaces.forEach((space) => {
-        space.style.width = `${gridSpace.offsetWidth}px`;
-        space.style.height = `${gridSpace.offsetHeight}px`;
-    });
+    if (isVertical) {
+        // Fill space and all spaces behind
+        let row = destination.parentElement;
+        for (let i = 0; i < dragPosition; i++) {
+            row.querySelector(`#x${xPosition}`).classList.add("hasShip");
+            row = row.previousElementSibling;
+        }
+
+        // Fill spaces after
+        row = destination.parentElement;
+        for (let i = 0; i < rearDiff; i++) {
+            row = row.nextElementSibling;
+            row.querySelector(`#x${xPosition}`).classList.add("hasShip");
+        }
+    } else {
+        let space = destination;
+        for (let i = 0; i < dragPosition; i++) {
+            space.classList.add("hasShip");
+            space = space.previousElementSibling;
+        }
+
+        space = destination;
+        for (let i = 0; i < rearDiff; i++) {
+            space = space.nextElementSibling;
+            space.classList.add("hasShip");
+        }
+    }
 }
 
-function addRotateFunctionality() {
-    const rotateBtn = document.querySelector(".btn");
-    rotateBtn.addEventListener("click", () => {
-        document.querySelector(".ship").classList.toggle("rotate");
-    });
+function getIDNumber(element) {
+    return parseInt(element.id.replace(/\D/g, ""));
 }
