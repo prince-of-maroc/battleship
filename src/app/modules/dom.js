@@ -126,22 +126,24 @@ export default function domManager() {
                     isVertical = !isVertical;
                 });
             };
+            const addDragDropListeners = () => {
+                const spaces = document.querySelectorAll(".space");
 
-            const spaces = document.querySelectorAll(".space");
-
-            spaces.forEach((space) => {
-                space.addEventListener("dragover", (e) => {
-                    e.preventDefault();
+                spaces.forEach((space) => {
+                    space.addEventListener("dragover", (e) => {
+                        e.preventDefault();
+                    });
+                    space.addEventListener("dragenter", (e) => {
+                        e.preventDefault();
+                    });
+                    space.addEventListener("drop", (e) => {
+                        dropShip(activeSpace, e.toElement, isVertical);
+                    });
                 });
-                space.addEventListener("dragenter", (e) => {
-                    e.preventDefault();
-                });
-                space.addEventListener("drop", (e) => {
-                    dropShip(activeSpace, e.toElement, isVertical);
-                });
-            });
+            };
 
             addRotateFunctionality();
+            addDragDropListeners();
 
             changeShipName("carrier");
             renderShipSpaces(player.ships.carrier.length);
