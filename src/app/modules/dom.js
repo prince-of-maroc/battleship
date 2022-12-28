@@ -93,14 +93,25 @@ export default function domManager() {
                 alert("You lose");
             }
         },
-        renderShipSpaces() {
-            const shipSpaces = document.querySelectorAll(".ship div");
-            const gridSpace = document.querySelector(".space");
-
-            shipSpaces.forEach((space) => {
-                space.style.width = `${gridSpace.offsetWidth}px`;
-                space.style.height = `${gridSpace.offsetHeight}px`;
-            });
+        startShipPlacementLoop(player) {
+            renderShipSpaces(player.ships.carrier.length);
         },
     };
+}
+
+function renderShipSpaces(length) {
+    const ship = document.querySelector(".ship");
+    ship.textContent = "";
+    for (let i = 0; i < length; i++) {
+        let space = document.createElement("div");
+        space.classList.add("space");
+        ship.appendChild(space);
+    }
+    const shipSpaces = document.querySelectorAll(".ship div");
+    const gridSpace = document.querySelector(".space");
+
+    shipSpaces.forEach((space) => {
+        space.style.width = `${gridSpace.offsetWidth}px`;
+        space.style.height = `${gridSpace.offsetHeight}px`;
+    });
 }

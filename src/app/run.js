@@ -11,8 +11,8 @@ export default function run() {
     randomlyPopulateGameboard(computer);
 
     dom.renderGameboards();
+    dom.startShipPlacementLoop(player);
     dom.populateGameboard(player);
-    dom.renderShipSpaces();
 
     dom.startDOMEventLoop(player, computer);
 }
