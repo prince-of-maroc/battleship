@@ -9,15 +9,5 @@ export default function run() {
 
     dom.renderGameboards();
     dom.executeShipPlacementLoop(player);
-    randomlyPopulateGameboard(computer);
-    dom.startDOMEventLoop(player, computer);
-}
-
-function randomlyPopulateGameboard(player) {
-    // Temporary function to populate gameboards with ships at legal positions.
-    player.gameboard.placeShip(player.ships.battleship, [0, 0], "horizontal");
-    player.gameboard.placeShip(player.ships.destroyer, [3, 9], "horizontal");
-    player.gameboard.placeShip(player.ships.carrier, [3, 3], "vertical");
-    player.gameboard.placeShip(player.ships.cruiser, [7, 7], "vertical");
-    player.gameboard.placeShip(player.ships.submarine, [0, 8], "horizontal");
+    dom.executeDOMEventLoop(player, computer);
 }

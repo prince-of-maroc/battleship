@@ -39,7 +39,27 @@ export default function domManager() {
                 }
             }
         },
-        startDOMEventLoop(user, enemyPlayer) {
+        executeDOMEventLoop(user, enemyPlayer) {
+            const updateUserDOM = (user) => {
+                user.gameboard.missedSquares.forEach((coords) => {
+                    const [x, y] = coords;
+                    let space = document.querySelector(`.board #y${y} #x${x}`);
+
+                    space.classList.add("missed");
+                });
+
+                user.gameboard.hitSquares.forEach((coords) => {
+                    const [x, y] = coords;
+                    let space = document.querySelector(`.board #y${y} #x${x}`);
+
+                    space.classList.remove("hasShip");
+                    space.classList.add("hit");
+                });
+
+                if (user.gameboard.allSunk()) {
+                    alert("You lose");
+                }
+            };
             const enemyGameboard =
                 document.querySelector("main .enemy").lastElementChild;
 
@@ -67,30 +87,10 @@ export default function domManager() {
                         alert("You win");
                     } else {
                         enemyPlayer.randomAttack(user);
-                        this.updateUserDOM(user);
+                        updateUserDOM(user);
                     }
                 });
             });
-        },
-        updateUserDOM(user) {
-            user.gameboard.missedSquares.forEach((coords) => {
-                const [x, y] = coords;
-                let space = document.querySelector(`.board #y${y} #x${x}`);
-
-                space.classList.add("missed");
-            });
-
-            user.gameboard.hitSquares.forEach((coords) => {
-                const [x, y] = coords;
-                let space = document.querySelector(`.board #y${y} #x${x}`);
-
-                space.classList.remove("hasShip");
-                space.classList.add("hit");
-            });
-
-            if (user.gameboard.allSunk()) {
-                alert("You lose");
-            }
         },
         executeShipPlacementLoop(player, shipNum = 1) {
             let playerShip;
