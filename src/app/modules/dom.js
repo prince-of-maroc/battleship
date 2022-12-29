@@ -93,7 +93,8 @@ export default function domManager() {
                 alert("You lose");
             }
         },
-        executeShipPlacementLoop(player, shipNum = 1) {
+        executeShipPlacementLoop(player) {
+            let shipNum = 1;
             let isVertical = true;
             let activeSpace;
             const renderShipSpaces = (length) => {
