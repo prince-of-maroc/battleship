@@ -41,8 +41,7 @@ export default function domManager() {
         },
         startDOMEventLoop(user, enemyPlayer) {
             const enemyGameboard =
-                document.querySelector("main").lastElementChild
-                    .lastElementChild;
+                document.querySelector("main .enemy").lastElementChild;
 
             enemyGameboard.querySelectorAll(".space").forEach((space) => {
                 space.addEventListener("click", () => {
