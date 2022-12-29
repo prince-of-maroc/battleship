@@ -20,18 +20,23 @@ export default function createPlayer() {
             player.gameboard.receiveAttack(coords);
         },
         randomAttack(player) {
-            let coords = generateRandomCoordinates();
+            let coords = getRandomCoordinates();
             while (
                 contains(player.gameboard.hitSquares, coords) ||
                 contains(player.gameboard.missedSquares, coords)
             ) {
-                coords = generateRandomCoordinates();
+                coords = getRandomCoordinates();
             }
             player.gameboard.receiveAttack(coords);
         },
+        randomlyPopulateGameboard() {},
     };
 }
 
-function generateRandomCoordinates() {
+function getRandomCoordinates() {
     return [Math.floor(Math.random() * 10), Math.floor(Math.random() * 10)];
+}
+
+function getRandomDirection() {
+    return Math.floor(Math.random() * 10) > 5 ? "vertical" : "horizontal";
 }
