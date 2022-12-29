@@ -18,7 +18,7 @@ export default function domManager() {
                 }
             });
         },
-        populateGameboard(player, isPlayer = true) {
+        populateGameboard(player, isPlayer = false) {
             for (let x = 0; x < 10; x++) {
                 for (let y = 0; y < 10; y++) {
                     if (player.gameboard.spaces[x][y]) {
@@ -93,7 +93,7 @@ export default function domManager() {
                 alert("You lose");
             }
         },
-        startShipPlacementLoop(player) {
+        executeShipPlacementLoop(player, shipNum = 1) {
             let isVertical = true;
             let activeSpace;
             const renderShipSpaces = (length) => {
@@ -116,19 +116,37 @@ export default function domManager() {
                     space.style.height = `${gridSpace.offsetHeight}px`;
                 });
             };
+            const updateShipSpaces = (length) => {
+                const ship = document.querySelector(".ship");
+                const shipChildren = [...ship.children];
+                let currentLength = shipChildren.length;
+
+                if (currentLength == length) {
+                    return;
+                }
+
+                let diff = currentLength - length;
+                for (let i = 0; i < diff; i++) {
+                    let lastIndex = shipChildren.length - 1;
+                    shipChildren[lastIndex].remove();
+                }
+            };
             const changeShipName = (name) => {
                 document.querySelector("span").textContent = name;
             };
             const addRotateFunctionality = () => {
                 const rotateBtn = document.querySelector(".btn");
                 rotateBtn.addEventListener("click", () => {
-                    document.querySelector(".ship").classList.toggle("rotate");
                     isVertical = !isVertical;
+                    document.querySelector(".ship").classList.toggle("rotate");
                 });
             };
             const addDragDropListeners = () => {
+                const ship = document.querySelector(".ship");
+                ship.addEventListener("dragstart", () => {
+                    setTimeout(() => (ship.style.display = "hidden"), 0);
+                });
                 const spaces = document.querySelectorAll(".space");
-
                 spaces.forEach((space) => {
                     space.addEventListener("dragover", (e) => {
                         e.preventDefault();
@@ -138,15 +156,48 @@ export default function domManager() {
                     });
                     space.addEventListener("drop", (e) => {
                         dropShip(activeSpace, e.toElement, isVertical);
+                        ship.style.display = "flex";
+                        ship.classList.remove("rotate");
+                        isVertical = true;
+                        displayNextShip(player, (shipNum = shipNum + 1));
                     });
                 });
+            };
+            const displayNextShip = () => {
+                switch (shipNum) {
+                    case 1:
+                        changeShipName("carrier");
+                        renderShipSpaces(player.ships.carrier.length);
+                        break;
+                    case 2:
+                        changeShipName("battleship");
+                        updateShipSpaces(player.ships.battleship.length);
+                        break;
+                    case 3:
+                        changeShipName("cruiser");
+                        updateShipSpaces(player.ships.cruiser.length);
+                        break;
+                    case 4:
+                        changeShipName("submarine");
+                        updateShipSpaces(player.ships.submarine.length);
+                        break;
+                    case 5:
+                        changeShipName("destroyer");
+                        updateShipSpaces(player.ships.destroyer.length);
+                        break;
+                    case 6: // End loop
+                        document.querySelector(".ships").style.display = "none";
+                        document.querySelector(".enemy").style.display =
+                            "block";
+                        document.querySelector(".player h2").style.display =
+                            "block";
+                        break;
+                }
             };
 
             addRotateFunctionality();
             addDragDropListeners();
-
-            changeShipName("carrier");
-            renderShipSpaces(player.ships.carrier.length);
+            displayNextShip();
         },
     };
 }

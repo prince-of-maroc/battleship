@@ -8,8 +8,6 @@ export default function run() {
     let computer = createPlayer();
 
     dom.renderGameboards();
-    dom.startShipPlacementLoop(player);
-    dom.populateGameboard(player);
-
+    dom.executeShipPlacementLoop(player);
     dom.startDOMEventLoop(player, computer);
 }
