@@ -164,32 +164,6 @@ export default function domManager() {
                             playerShip
                         );
 
-                        /*
-                        Update gameboard after every DOM drag and drop.
-                        Probably need to move this code to dropShip function
-                        
-                        code here
-                        
-                        vars needed:
-                        - coords of s1
-                        - isVertical
-                        - ship
-
-                        find coords of s1
-                        determine isVertical
-
-                        if isVertical
-                            place ship vertically from coords
-                        else
-                            place ship horizontally from coords
-
-                        if(isVertical){
-                            player.gameboard.placeShip(ship, s1coords, 'vertical')
-                        } else {
-                            player.gameboard.placeShip(ship, s1coords, 'horizontal')
-                        }
-                        */
-
                         ship.style.display = "flex";
                         ship.classList.remove("rotate");
                         isVertical = true;
@@ -246,12 +220,6 @@ function dropShip(source, destination, isVertical, player, ship) {
     let dragPosition = getIDNumber(source);
     let xPosition = getIDNumber(destination);
     let rearDiff = shipLength - dragPosition;
-
-    // if (isVertical) {
-    //     player.gameboard.placeShip(ship, s1coords, "vertical");
-    // } else {
-    //
-    // }
 
     if (isVertical) {
         // Fill space and all spaces behind
