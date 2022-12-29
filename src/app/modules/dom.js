@@ -93,8 +93,8 @@ export default function domManager() {
                 alert("You lose");
             }
         },
-        executeShipPlacementLoop(player) {
-            let shipNum = 1;
+        executeShipPlacementLoop(player, shipNum = 1) {
+            let playerShip;
             let isVertical = true;
             let activeSpace;
             const renderShipSpaces = (length) => {
@@ -147,7 +147,7 @@ export default function domManager() {
                 ship.addEventListener("dragstart", () => {
                     setTimeout(() => (ship.style.display = "hidden"), 0);
                 });
-                const spaces = document.querySelectorAll(".space");
+                const spaces = document.querySelectorAll(".player .space");
                 spaces.forEach((space) => {
                     space.addEventListener("dragover", (e) => {
                         e.preventDefault();
@@ -156,7 +156,40 @@ export default function domManager() {
                         e.preventDefault();
                     });
                     space.addEventListener("drop", (e) => {
-                        dropShip(activeSpace, e.toElement, isVertical);
+                        dropShip(
+                            activeSpace,
+                            e.toElement,
+                            isVertical,
+                            player,
+                            playerShip
+                        );
+
+                        /*
+                        Update gameboard after every DOM drag and drop.
+                        Probably need to move this code to dropShip function
+                        
+                        code here
+                        
+                        vars needed:
+                        - coords of s1
+                        - isVertical
+                        - ship
+
+                        find coords of s1
+                        determine isVertical
+
+                        if isVertical
+                            place ship vertically from coords
+                        else
+                            place ship horizontally from coords
+
+                        if(isVertical){
+                            player.gameboard.placeShip(ship, s1coords, 'vertical')
+                        } else {
+                            player.gameboard.placeShip(ship, s1coords, 'horizontal')
+                        }
+                        */
+
                         ship.style.display = "flex";
                         ship.classList.remove("rotate");
                         isVertical = true;
@@ -167,24 +200,29 @@ export default function domManager() {
             const displayNextShip = () => {
                 switch (shipNum) {
                     case 1:
+                        playerShip = player.ships.carrier;
                         changeShipName("carrier");
-                        renderShipSpaces(player.ships.carrier.length);
+                        renderShipSpaces(playerShip.length);
                         break;
                     case 2:
+                        playerShip = player.ships.battleship;
                         changeShipName("battleship");
-                        updateShipSpaces(player.ships.battleship.length);
+                        updateShipSpaces(playerShip.length);
                         break;
                     case 3:
+                        playerShip = player.ships.cruiser;
                         changeShipName("cruiser");
-                        updateShipSpaces(player.ships.cruiser.length);
+                        updateShipSpaces(playerShip.length);
                         break;
                     case 4:
+                        playerShip = player.ships.submarine;
                         changeShipName("submarine");
-                        updateShipSpaces(player.ships.submarine.length);
+                        updateShipSpaces(playerShip.length);
                         break;
                     case 5:
+                        playerShip = player.ships.destroyer;
                         changeShipName("destroyer");
-                        updateShipSpaces(player.ships.destroyer.length);
+                        updateShipSpaces(playerShip.length);
                         break;
                     case 6: // End loop
                         document.querySelector(".ships").style.display = "none";
@@ -203,16 +241,24 @@ export default function domManager() {
     };
 }
 
-function dropShip(source, destination, isVertical) {
+function dropShip(source, destination, isVertical, player, ship) {
     let shipLength = source.parentElement.children.length;
     let dragPosition = getIDNumber(source);
     let xPosition = getIDNumber(destination);
     let rearDiff = shipLength - dragPosition;
 
+    // if (isVertical) {
+    //     player.gameboard.placeShip(ship, s1coords, "vertical");
+    // } else {
+    //
+    // }
+
     if (isVertical) {
         // Fill space and all spaces behind
         let row = destination.parentElement;
+        let firstY;
         for (let i = 0; i < dragPosition; i++) {
+            firstY = getIDNumber(row);
             row.querySelector(`#x${xPosition}`).classList.add("hasShip");
             row = row.previousElementSibling;
         }
@@ -223,9 +269,13 @@ function dropShip(source, destination, isVertical) {
             row = row.nextElementSibling;
             row.querySelector(`#x${xPosition}`).classList.add("hasShip");
         }
+
+        player.gameboard.placeShip(ship, [xPosition, firstY], "vertical");
     } else {
         let space = destination;
+        let firstX;
         for (let i = 0; i < dragPosition; i++) {
+            firstX = getIDNumber(space);
             space.classList.add("hasShip");
             space = space.previousElementSibling;
         }
@@ -235,6 +285,12 @@ function dropShip(source, destination, isVertical) {
             space = space.nextElementSibling;
             space.classList.add("hasShip");
         }
+
+        player.gameboard.placeShip(
+            ship,
+            [firstX, getIDNumber(space.parentElement)],
+            "horizontal"
+        );
     }
 }
 

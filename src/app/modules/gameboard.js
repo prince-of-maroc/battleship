@@ -12,22 +12,12 @@ export default function createGameboard() {
         placeShip(ship, coords, direction) {
             const [x, y] = coords;
             switch (direction) {
-                case "left":
-                    for (let i = x; i > x - ship.length; i--) {
-                        this.spaces[i][y] = ship;
-                    }
-                    break;
-                case "right":
+                case "horizontal":
                     for (let i = x; i < x + ship.length; i++) {
                         this.spaces[i][y] = ship;
                     }
                     break;
-                case "up":
-                    for (let i = y; i < y + ship.length; i++) {
-                        this.spaces[x][i] = ship;
-                    }
-                    break;
-                case "down":
+                case "vertical":
                     for (let i = y; i > y - ship.length; i--) {
                         this.spaces[x][i] = ship;
                     }
