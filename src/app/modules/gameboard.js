@@ -38,6 +38,7 @@ export default function createGameboard() {
                 this.spaces[x][y].hit();
                 this.spaces[x][y] = null;
                 this.hitSquares.push(coords);
+                return true;
             } else {
                 this.missedSquares.push(coords);
             }

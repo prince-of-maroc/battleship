@@ -5,6 +5,7 @@ import contains from "../utils/contains.js";
 export default function createPlayer() {
     return {
         gameboard: createGameboard(),
+        attackQueue: [],
         ships: {
             carrier: createShip(5),
             battleship: createShip(4),
@@ -21,13 +22,41 @@ export default function createPlayer() {
         },
         randomAttack(player) {
             let coords = getRandomCoordinates();
+            if (this.attackQueue.length > 0) {
+                coords = this.attackQueue.shift();
+            }
             while (
                 contains(player.gameboard.hitSquares, coords) ||
                 contains(player.gameboard.missedSquares, coords)
             ) {
-                coords = getRandomCoordinates();
+                if (this.attackQueue.length > 0) {
+                    coords = this.attackQueue.shift();
+                } else {
+                    coords = getRandomCoordinates();
+                }
             }
-            player.gameboard.receiveAttack(coords);
+
+            if (player.gameboard.receiveAttack(coords)) {
+                this.attackQueue = [];
+                let leftSquare = [coords[0] - 1, coords[1]];
+                let rightSquare = [coords[0] + 1, coords[1]];
+                let upSquare = [coords[0], coords[1] + 1];
+                let downSquare = [coords[0], coords[1] - 1];
+
+                let potentialNextAttacks = [
+                    upSquare,
+                    leftSquare,
+                    rightSquare,
+                    downSquare,
+                ];
+
+                potentialNextAttacks.forEach((coord) => {
+                    const [x, y] = coord;
+                    if (x < 10 && x >= 0 && y < 10 && y >= 0) {
+                        this.attackQueue.push(coord);
+                    }
+                });
+            }
         },
         randomlyPopulateGameboard(shipNum = 1) {
             const isWithinBounds = (ship, coords, direction) => {
