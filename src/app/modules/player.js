@@ -85,6 +85,14 @@ export default function createPlayer() {
                 coords = getRandomCoordinates();
                 direction = getRandomDirection();
             }
+
+            if (shipNum < 5) {
+                this.gameboard.placeShip(ship, coords, direction);
+                this.randomlyPopulateGameboard(shipNum + 1);
+            } else {
+                this.gameboard.placeShip(ship, coords, direction);
+                return;
+            }
         },
     };
 }
