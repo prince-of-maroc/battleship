@@ -37,7 +37,6 @@ export default function createPlayer() {
             }
 
             if (player.gameboard.receiveAttack(coords)) {
-                this.attackQueue = [];
                 let leftSquare = [coords[0] - 1, coords[1]];
                 let rightSquare = [coords[0] + 1, coords[1]];
                 let upSquare = [coords[0], coords[1] + 1];
@@ -53,7 +52,7 @@ export default function createPlayer() {
                 potentialNextAttacks.forEach((coord) => {
                     const [x, y] = coord;
                     if (x < 10 && x >= 0 && y < 10 && y >= 0) {
-                        this.attackQueue.push(coord);
+                        this.attackQueue.unshift(coord);
                     }
                 });
             }
