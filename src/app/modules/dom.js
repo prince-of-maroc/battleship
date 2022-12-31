@@ -57,7 +57,7 @@ export default function domManager() {
                 });
 
                 if (user.gameboard.allSunk()) {
-                    alert("You lose");
+                    this.displayEndGameModal(false);
                 }
             };
             const enemyGameboard =
@@ -84,7 +84,7 @@ export default function domManager() {
 
                     // Either end game or receive attack from enemy
                     if (enemyPlayer.gameboard.allSunk()) {
-                        alert("You win");
+                        this.displayEndGameModal();
                     } else {
                         enemyPlayer.randomAttack(user);
                         updateUserDOM(user);
@@ -210,6 +210,24 @@ export default function domManager() {
             addRotateFunctionality();
             addDragDropListeners();
             displayNextShip();
+        },
+        displayEndGameModal(isVictory = true) {
+            const modal = document.querySelector(".modal");
+            const overlay = document.querySelector(".overlay");
+            const replayBtn = document.querySelector(".again");
+            const span = document.querySelector(".modal span");
+
+            modal.style.display = "flex";
+            overlay.style.display = "flex";
+            if (isVictory) {
+                span.textContent = "WON";
+            } else {
+                span.textContent = "LOST";
+            }
+
+            replayBtn.addEventListener("click", () => {
+                window.location.reload();
+            });
         },
     };
 }
